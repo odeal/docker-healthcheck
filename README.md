@@ -1,4 +1,4 @@
-###Giriş
+### Giriş
 
 Bu yazıda mümkün olduğunca Türkçe kullanmaya çalışacağım. Olası terimlerin yanında parantez içerisinde sektör içinde kullanılan halini belirteceğim.  
 
@@ -6,11 +6,11 @@ Bir çoğumuz "**o kod bende çalışıyor bu durum sistemcinin suçu**" durumuy
 
 Docker, günümüz teknoloji dünyasında makine sanallaştırma işleminin sektör standardı haline gelmiştir. Bilinen çoğu platform artık Docker imajlarını standart olarak desteklemekte, istenildiği gibi ölçekleyebilmekte veyahut küme _(cluster)_ içerisinde düğümden düğüme _(node)_ çok kolay bir şekilde transfer edebilmektedir. Bu da DevOps tarafındaki arkadaşların çok işine yaramaktadır. Bu yazıda Docker'e değinmeyeceğiz, o sebepten bu bölümü kısa tutuyorum.
 
-###Amaç
+### Amaç
 
 Geliştirici _(developer)_ arkadaşlarımız sürekli yenilikler geliştirip DevOps arkadaşlarımız da bunu müteakiben versiyonlar çıkmaktadır _(deployment)_. Hepimizin bildiği üzere versiyon çıkma işi platformda o an koşan imajın yerine yeni bir imaj yerleştirmek suretiyle yapılmaktadır. Bu esnada yeni imajımız ayağa kalkana kadar olan süre boyunca kesinti _(downtime)_ yaşayacağız. O sebepten muhtemelen bu tip versiyon yükseltme işleri için uykumuzdan ya da sosyal yaşantımızdan fedakarlık etmekteyiz.
 
-###Docker Sağlık Kontrolü _(healthcheck)_
+### Docker Sağlık Kontrolü _(healthcheck)_
 
 Versiyon değiştirme işinde arada kalan kesintiyi bertaraf etmek için imajlarımıza birer sağlık kontrolü ekleyebiliriz. Bunu eklemenin başka türlü de faydaları az değil ancak ben burada kesinti süresini bertaraf etme maksatlı anlatacağım.
 
@@ -27,9 +27,9 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=60s CMD curl --fail http:
 **start-period:** Denetimin imaj ayağa kalktıktan ne kadar süre sonra başlayacağını belirleyen parametre. Örnekte 1 dakika sonra kendi sağlığını denetlemeye çalışacak.  
 **CMD:** Sağlık denetimi için çalıştırılacak komut. Benim örneğimde eğer ters bir durum varsa exit 1 ile çık komutu verdim.
 
-###Dezavantajlar
+### Dezavantajlar
 - Geç ayağa kalkan bir uygulamanız var ise start-period parametresi üzerinde değişiklik yapmalısınız.
 - Sağlık denetimi olan imajlar sağlıklı _(healthy)_ durumuna düşene kadar başlatılıyor _(starting)_ durumunda kalacaktır, platformunuz (swarm, kubernetes, vb.) bu imaja trafik yönlendirmeyecek, eski çalışan halinde kalmaya devam edecektir. Bu, düğümü ilk başlattığınız durumlarda _(cold start)_ kesinti süresini uzatacaktır.
 
-###Sonuç
+### Sonuç
 Bir çok konuda fayda sağlayan Docker sağlık denetimine versiyon değişimi esnasındaki kesintileri azaltma konusunda ufkum çerçevesinde değinmeye çalıştım. Fikirlerinizi, eksiklikleri yorum kısmında belirtebilirsiniz, kesintisiz günler diliyorum.
