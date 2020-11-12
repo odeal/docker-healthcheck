@@ -27,6 +27,15 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=60s CMD curl --fail http:
 **start-period:** Denetimin imaj ayağa kalktıktan ne kadar süre sonra başlayacağını belirleyen parametre. Örnekte 1 dakika sonra kendi sağlığını denetlemeye çalışacak.  
 **CMD:** Sağlık denetimi için çalıştırılacak komut. Benim örneğimde eğer ters bir durum varsa exit 1 ile çık komutu verdim.
 
+Spring Boot actuator için pom.xml'de bulunması gereken bölüm:
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
 ### Dezavantajlar
 - Geç ayağa kalkan bir uygulamanız var ise start-period parametresi üzerinde değişiklik yapmalısınız.
 - Sağlık denetimi olan imajlar sağlıklı _(healthy)_ durumuna düşene kadar başlatılıyor _(starting)_ durumunda kalacaktır, platformunuz (swarm, kubernetes, vb.) bu imaja trafik yönlendirmeyecek, eski çalışan halinde kalmaya devam edecektir. Bu, düğümü ilk başlattığınız durumlarda _(cold start)_ kesinti süresini uzatacaktır.
